@@ -1,0 +1,186 @@
+@startuml
+
+class Register {
+    -navigate: function
+    -dispatch: function
+    +onFinish(values): async function
+}
+
+class Login {
+    -navigate: function
+    -dispatch: function
+    +onFinish(values): async function
+}
+
+class Home {
+    -user: object
+    -filters: object
+    -buses: array
+    -getBuses(): async function
+}
+
+class Bus {
+    +bus: object
+    -navigate: function
+}
+
+class Bookings {
+    -showPrintModal: boolean
+    -selectedBooking: object
+    -bookings: array
+    -dispatch: function
+    -getBookings(): async function
+}
+
+class BookNow {
+    -selectedSeats: array
+    -bus: object
+    -getBus(): async function
+    -bookNow(transactionId): async function
+    -onToken(token): async function
+}
+
+class SeatSelection {
+    +selectedSeats: array
+    +setSelectedSeats: function
+    +bus: object
+    +selectOrUnselectSeats(seatNumber): function
+}
+
+class BusForm {
+    -showBusForm: boolean
+    -setShowBusForm: function
+    -type: string
+    -getData: function
+    -selectedBus: object
+    -setSelectedBus: function
+    -onFinish(values): async function
+}
+
+class axios {
+    +post(url, data): Promise
+}
+
+class axiosInstance {
+    +create(config): axios
+}
+class Redux {
+    +ShowLoading: Action
+    +HideLoading: Action
+    +useSelector: Hook
+    +useDispatch: Hook
+}
+
+class ReactRouterDom {
+    +BrowserRouter: Component
+    +Routes: Component
+    +Route: Component
+    +useNavigate: Hook
+    +Link: Component
+    +useParams: Hook
+}
+
+class BusesRouter {
+    +postAddBus()
+    +postUpdateBus()
+    +postDeleteBus()
+    +postGetAllBuses()
+    +postGetBusById()
+}
+
+class BusModel {
+    +name: String
+    +number: String
+    +capacity: Number
+    +from: String
+    +to: String
+    +journeyDate: String
+    +departure: String
+    +arrival: String
+    +type: String
+    +fare: Number
+    +seatsBooked: Array
+    +status: String
+}
+
+class BookingModel {
+    +bus: ObjectId
+    +user: ObjectId
+    +seats: Array
+    +transactionId: String
+}
+
+class UserModel {
+    +name: String
+    +email: String
+    +password: String
+    +isAdmin: Boolean
+    +isBlocked: Boolean
+}
+
+class UsersRouter {
+    +postRegister()
+    +postLogin()
+    +postGetUserById()
+    +postGetAllUsers()
+    +postUpdateUserPermissions()
+}
+
+class BookingsRouter {
+    +postBookSeat()
+    +postMakePayment()
+    +postGetBookingsByUserId()
+    +postGetAllBookings()
+}
+
+class Stripe {}
+
+class AuthMiddleware {
+    +verifyToken()
+}
+
+
+
+ReactRouterDom --> Home : routes >>
+ReactRouterDom --> Login : routes >>
+ReactRouterDom --> Register : routes >>
+ReactRouterDom --> Bookings : routes >>
+ReactRouterDom --> BookNow : routes >>
+
+PublicRoute --> Login : wraps >>
+PublicRoute --> Register : wraps >>
+
+ProtectedRoute --> Home : wraps >>
+ProtectedRoute --> Bookings : wraps >>
+ProtectedRoute --> BookNow : wraps >>
+
+Login --> axios : uses >>
+Register --> axios : uses >>
+
+BookNow --> SeatSelection : uses >>
+BookNow --> StripeCheckout : uses >>
+BookNow --> axiosInstance : uses >>
+BookNow --> Redux : uses >>
+
+Bookings --> axiosInstance : uses >>
+Bookings --> Redux : uses >>
+
+BusForm --> axiosInstance : uses >>
+BusForm --> Redux : uses >>
+BusForm --> BusModel : interacts >>
+
+BusesRouter --> BusModel : interacts >>
+BusesRouter --> BookingModel : interacts >>
+BusesRouter --> Stripe : uses for payments >>
+BusesRouter --> AuthMiddleware : uses >>
+
+BookingsRouter --> BookingModel : interacts >>
+BookingsRouter --> Stripe : uses for payments >>
+BookingsRouter --> AuthMiddleware : uses >>
+
+UsersRouter --> UserModel : interacts >>
+UsersRouter --> AuthMiddleware : uses >>
+
+Bus --> ReactRouterDom : uses >>
+
+@enduml

@@ -41,9 +41,11 @@ function Login() {
           </Form.Item>
           <div className="d-flex justify-content-between align-items-center my-3">
             <Link to="/register">Click Here To Register</Link>
+            <Link to="/passwordreset">Password Forgetten?</Link>
             <button className="secondary-btn" type="submit">
               Login
             </button>
+            
           </div>
         </Form>
       </div>

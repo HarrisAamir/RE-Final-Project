@@ -37,7 +37,7 @@ function BookNow() {
       const response = await axiosInstance.post("/api/bookings/book-seat", {
         bus: bus._id,
         seats: selectedSeats,
-        transactionId,
+        transactionId:123218712,
       });
       dispatch(HideLoading());
       if (response.data.success) {
@@ -119,7 +119,7 @@ function BookNow() {
                 Fare : ₹ <b> {bus.fare * selectedSeats.length} </b> /-
               </h1>
               <hr />
-
+{/* 
               <StripeCheckout
                 billingAddress
                 token={onToken}
@@ -127,15 +127,17 @@ function BookNow() {
                 currency="INR"
                 stripeKey="pk_test_51OABS9SBfK11D6WFBvHmC5D095uOdGEbZglJqrI5fIwJuIC4Tt0hsUex7sCnHKoVoCzJ02DR2uScdIEHVUStqrKx00ge3jh3yc"
               >
+              
+              </StripeCheckout> */}
                 <button
                   className={`primary-btn ${
                     selectedSeats.length === 0 && "disabled-btn"
                   }`}
                   disabled={selectedSeats.length === 0}
+                  onClick={bookNow}
                 >
                   Book Now
                 </button>
-              </StripeCheckout>
             </div>
           </Col>
           <Col lg={12} xs={24} sm={24}>

@@ -7,6 +7,8 @@ import Register from "./pages/Register";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Loader from "./components/Loader";
+import Profile from "./pages/profile";
+import ChangePassword from "./pages/PasswordChange";
 import { useSelector } from "react-redux";
 import AdminHome from "./pages/Admin/AdminHome";
 import AdminBuses from "./pages/Admin/AdminBuses";
@@ -46,6 +48,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+             <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/admin/buses"
@@ -64,6 +74,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+       
           <Route
             path="/admin/bookings"
             element={
@@ -88,7 +99,16 @@ function App() {
               </PublicRoute>
             }
           />
+          <Route
+            path="/passwordreset"
+            element={
+              <PublicRoute>
+                <ChangePassword />
+              </PublicRoute>
+            }
+          />
         </Routes>
+        
       </BrowserRouter>
     </div>
   );

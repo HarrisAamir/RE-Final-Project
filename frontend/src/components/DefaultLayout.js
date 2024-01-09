@@ -18,6 +18,11 @@ function DefaultLayout({ children }) {
       path: "/bookings",
     },
     {
+      name: "Profile",
+      icon: "ri-user-line",
+      path: "/profile",
+    },
+    {
       name: "Logout",
       icon: "ri-logout-box-line",
       path: "/logout",

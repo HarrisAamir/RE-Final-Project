@@ -1,12 +1,11 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
+const authMiddleware = require("../middlewares/authMiddleware");
 const Booking = require("../models/bookingsModel");
 const Bus = require("../models/busModel");
 const stripe = require("stripe")(process.env.stripe_secret_key);
 const { v4: uuidv4 } = require("uuid");
-const authMiddleware = require("../middlewares/authMiddleware");
+// book a seat
 
-// Book a seat
 router.post("/book-seat", authMiddleware, async (req, res) => {
   try {
     const newBooking = new Booking({
@@ -31,7 +30,8 @@ router.post("/book-seat", authMiddleware, async (req, res) => {
   }
 });
 
-// Make payment
+// make payment
+
 router.post("/make-payment", authMiddleware, async (req, res) => {
   try {
     const { token, amount } = req.body;
@@ -79,27 +79,27 @@ router.post("/make-payment", authMiddleware, async (req, res) => {
   }
 });
 
-// Get bookings by user ID
+// get bookings by user id
 router.post("/get-bookings-by-user-id", authMiddleware, async (req, res) => {
   try {
-        const bookings = await Booking.find({ user: req.body.userId })
-          .populate("bus")
-          .populate("user");
-        res.status(200).send({
-          message: "Bookings fetched successfully",
-          data: bookings,
-          success: true,
-        });
-      } catch (error) {
-        res.status(500).send({
-          message: "Bookings fetch failed",
-          data: error,
-          success: false,
-        });
-      }
+    const bookings = await Booking.find({ user: req.body.userId })
+      .populate("bus")
+      .populate("user");
+    res.status(200).send({
+      message: "Bookings fetched successfully",
+      data: bookings,
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "Bookings fetch failed",
+      data: error,
+      success: false,
+    });
+  }
 });
 
-// Get all bookings
+// get all bookings
 router.post("/get-all-bookings", authMiddleware, async (req, res) => {
   try {
     const bookings = await Booking.find().populate("bus").populate("user");

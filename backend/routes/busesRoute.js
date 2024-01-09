@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const Bus = require("../models/busModel");
 const authMiddleware = require("../middlewares/authMiddleware");
 
-// Add bus
+// add-bus
+
 router.post("/add-bus", authMiddleware, async (req, res) => {
   try {
     console.log("inside add bus route...");
@@ -27,7 +27,8 @@ router.post("/add-bus", authMiddleware, async (req, res) => {
   }
 });
 
-// Update bus
+// update-bus
+
 router.post("/update-bus", authMiddleware, async (req, res) => {
   try {
     await Bus.findByIdAndUpdate(req.body._id, req.body);
@@ -40,7 +41,8 @@ router.post("/update-bus", authMiddleware, async (req, res) => {
   }
 });
 
-// Delete bus
+// delete-bus
+
 router.post("/delete-bus", authMiddleware, async (req, res) => {
   try {
     await Bus.findByIdAndDelete(req.body._id);
@@ -53,7 +55,8 @@ router.post("/delete-bus", authMiddleware, async (req, res) => {
   }
 });
 
-// Get all buses for each user
+// get-all-buses - for each user
+
 router.post("/get-all-buses", authMiddleware, async (req, res) => {
   try {
     const buses = await Bus.find(req.body);
@@ -69,7 +72,8 @@ router.post("/get-all-buses", authMiddleware, async (req, res) => {
   }
 });
 
-// Get bus by ID
+// get-bus-by-id
+
 router.post("/get-bus-by-id", authMiddleware, async (req, res) => {
   try {
     const bus = await Bus.findById(req.body._id);

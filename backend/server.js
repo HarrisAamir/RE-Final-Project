@@ -10,6 +10,7 @@ const busesRoute = require("./routes/busesRoute");
 const bookingsRoute = require("./routes/bookingsRoute");
 
 app.use("/api/users", usersRoute);
+
 app.use("/api/buses", busesRoute);
 app.use("/api/bookings", bookingsRoute);
 const path = require("path");
@@ -29,5 +30,11 @@ if (process.env.NODE_ENV === 'production') {
     res.send('API is running....');
   });
 }
-
+app.get('/test', (req, res) => {
+  res.send('Hello, this is a simple Node.js GET request!');
+});
+app.post('/', (req, res) => {
+  res.send('Hello');
+});
 app.listen(port, () => console.log(`Node server listening on port ${port}!`));
+
